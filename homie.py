@@ -7,31 +7,34 @@ def get_days_from_today(date):
         today = datetime.today().date()
         difference = date - today
         return difference.days
-    except TypeError:
+    except ValueError:
         print("Please provide your date in this format: 'YYYY-MM-DD'")
 
 print(get_days_from_today("2025-12-20"))
 
-#Exericise 2
-#Спочатку я зробила ось так:
+# Exericise 2
+# Спочатку я зробила ось так:
 
 import random
 
 def get_numbers_ticket(min, max, quantity):
     lottery_list = []
-    if min >1 and max <1000:
-        for number in range(quantity):
-            number = random.randint(min,max)
-            while number not in lottery_list:
-                lottery_list.append(number)
-                break
-            else:
+    if max > min and min < quantity < max:
+        if min >1 and max <1000:
+            for number in range(quantity):
                 number = random.randint(min,max)
-                lottery_list.append(number)
-                continue
-        return sorted(lottery_list)
+                while number not in lottery_list:
+                    lottery_list.append(number)
+                    break
+                else:
+                    number = random.randint(min,max)
+                    lottery_list.append(number)
+                    continue
+            return sorted(lottery_list)
+        else:
+            return lottery_list
     else:
-        return lottery_list
+        return []
 
 #А потім подумала і зробила ось так:
 
@@ -39,36 +42,37 @@ import random
     
 def get_numbers_ticket(min, max, quantity):
     lottery_list = []
-    if min >1 and max <1000:
-        while len(lottery_list) < quantity:
-            number = random.randint(min,max)
-            lottery_list.append(number)
-            set(lottery_list)
-        return sorted(lottery_list)
+    if max > min and min < quantity < max:
+        if min >1 and max <1000:
+            while len(lottery_list) < quantity:
+                number = random.randint(min,max)
+                lottery_list.append(number)
+                new_list = set(lottery_list)
+                lottery_list = list(new_list)
+            return sorted(lottery_list)
+        else:
+            return lottery_list
     else:
-        return lottery_list
+        return []
 
-print(get_numbers_ticket(2,100,8))
+
+print(get_numbers_ticket(2,14,5))
 
 #Exercise 3
 
 import re
 
 def normalize_phone(phone_number):
-    new_list = []
     pattern = r"\D+"
     replac = r""
-    for item in phone_number:
-        new_number = re.sub(pattern, replac, item)
-        if new_number.startswith("38"):
-            new_number = f'+{new_number}'
-        elif new_number.startswith("0"):
-            new_number = f'+38{new_number}'
-        else:
-            pass
-        new_list.append(new_number)
-
-    return new_list
+    new_number= re.sub(pattern, replac, phone_number)
+    if new_number.startswith("38"):
+        new_number = f'+{new_number}'
+    elif new_number.startswith("0"):
+        new_number = f'+38{new_number}'
+    else:
+        pass
+    return new_number
 
 
 raw_numbers = [
@@ -83,4 +87,5 @@ raw_numbers = [
     "38050 111 22 11   ",
 ]
 
-print(normalize_phone(raw_numbers))
+sanitized_numbers = [normalize_phone(num) for num in raw_numbers]
+print("Нормалізовані номери телефонів для SMS-розсилки:", sanitized_numbers)
