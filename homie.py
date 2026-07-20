@@ -14,8 +14,6 @@ print(get_days_from_today("2025-12-20"))
 
 # Exericise 2
 
-#Я вирішила залишити цей варіант, бо перший не виходив
-
 import random
     
 def get_numbers_ticket(min, max, quantity):
