@@ -5,5 +5,5 @@ The task was to implement simple functions that perform the following operations
 - Generate a set of unique random numbers within a specified range.
 - Normalize phone numbers to a standardized format.
 
-### Technologies Used
+Technologies Used
 ![Python](https://shields.io)
